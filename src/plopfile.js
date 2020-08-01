@@ -7,20 +7,23 @@ module.exports = function (plop) {
         message: "What is the name of your spec?",
       },
       {
-        type: "confirm",
-        name: "isTypeScript",
-        message: "Are you using TypeScript?",
+        type: "list",
+        name: "ext",
+        message: "Which language?",
+        choices: [
+          { name: "JavaScript", value: "js" },
+          { name: "TypeScript", value: "ts" },
+        ],
+        default: "js",
       },
     ],
     actions: function (data) {
       const actions = [];
 
-      const ext = data.isTypeScript ? "ts" : "js";
-
       actions.push({
         type: "add",
-        path: `cypress/tests/ui/{{dashCase specName}}.spec.${ext}`,
-        templateFile: `templates/${ext}-spec.txt`,
+        path: `cypress/tests/ui/{{dashCase specName}}.spec.{{ ext }}`,
+        templateFile: `templates/${data.ext}-spec.txt`,
       });
 
       return actions;
