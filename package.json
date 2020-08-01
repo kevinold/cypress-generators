@@ -1,0 +1,36 @@
+{
+  "name": "@kevinold/cypress-generators",
+  "version": "0.0.0",
+  "description": "cypress generator scripts",
+  "license": "MIT",
+  "repository": "YOUR-GITHUB-USERNAME/unicorn-fun-cli",
+  "author": {
+    "name": "YOUR NAME",
+    "email": "YOUR EMAIL",
+    "url": "YOUR WEBSITE"
+  },
+  "bin": {
+    "cygen": "src/cli.js"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "files": [
+    "cli.js"
+  ],
+  "keywords": [
+    "cypress",
+    "generator",
+    "templates"
+  ],
+  "prettier": {
+    "trailingComma": "es5"
+  },
+  "dependencies": {
+    "plop": "^2.7.4",
+    "prettier": "^2.0.5"
+  }
+}
