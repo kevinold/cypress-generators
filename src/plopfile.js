@@ -1,28 +1,27 @@
 module.exports = function (plop) {
-  plop.setGenerator('test', {
+  plop.setGenerator("spec", {
     prompts: [
       {
-        type: 'confirm',
-        name: 'wantTacos',
-        message: 'Do you want tacos?',
+        type: "input",
+        name: "specName",
+        message: "What is the name of your spec?",
+      },
+      {
+        type: "confirm",
+        name: "isTypeScript",
+        message: "Are you using TypeScript?",
       },
     ],
     actions: function (data) {
-      var actions = [];
+      const actions = [];
 
-      if (data.wantTacos) {
-        actions.push({
-          type: 'add',
-          path: 'folder/{{dashCase name}}.txt',
-          templateFile: 'templates/tacos.txt',
-        });
-      } else {
-        actions.push({
-          type: 'add',
-          path: 'folder/{{dashCase name}}.txt',
-          templateFile: 'templates/burritos.txt',
-        });
-      }
+      const ext = data.isTypeScript ? "ts" : "js";
+
+      actions.push({
+        type: "add",
+        path: `cypress/tests/ui/{{dashCase specName}}.spec.${ext}`,
+        templateFile: `templates/${ext}-spec.txt`,
+      });
 
       return actions;
     },
