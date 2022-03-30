@@ -62,16 +62,18 @@ module.exports = function (plop) {
       const actions = [];
 
       if (data.type === "complete") {
-        actions.push({
-          type: "add",
-          path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-          templateFile: `templates/login/login-complete.js`,
-        });
-        actions.push({
-          type: "append",
-          path: `cypress/support/commands.js`,
-          templateFile: `templates/login/login-command.js`,
-        });
+        actions.push(
+          {
+            type: "add",
+            path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+            templateFile: `templates/login/login-complete.js`,
+          },
+          {
+            type: "append",
+            path: `cypress/support/commands.js`,
+            templateFile: `templates/login/login-command.js`,
+          }
+        );
       } else {
         actions.push({
           type: "add",
