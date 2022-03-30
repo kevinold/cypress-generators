@@ -71,7 +71,7 @@ module.exports = function (plop) {
           {
             type: "append",
             path: `cypress/support/commands.js`,
-            templateFile: `templates/login/login-command.js`,
+            templateFile: `templates/commands/login-command.js`,
           }
         );
       } else {
