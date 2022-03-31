@@ -88,4 +88,55 @@ module.exports = function (plop) {
       return actions;
     },
   });
+
+  plop.setGenerator("api", {
+    description:
+      "Creates either the scaffolding or a complete example spec for an API endpoint",
+    prompts: [
+      {
+        type: "input",
+        name: "specName",
+        message: "What is the name of your spec?",
+      },
+      {
+        type: "list",
+        name: "ext",
+        message: "Which language?",
+        choices: [
+          { name: "JavaScript", value: "js" },
+          { name: "TypeScript", value: "ts" },
+        ],
+        default: "js",
+      },
+      {
+        type: "list",
+        name: "type",
+        message: "Do you want the full example spec or just the scaffolding?",
+        choices: [
+          { name: "Example", value: "example" },
+          { name: "Scaffold", value: "scaffold" },
+        ],
+        default: "js",
+      },
+    ],
+    actions: function (data) {
+      const actions = [];
+
+      if (data.type === "example") {
+        actions.push({
+          type: "add",
+          path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+          templateFile: `templates/example/api.js`,
+        });
+      } else {
+        actions.push({
+          type: "add",
+          path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+          templateFile: `templates/scaffold/api.js`,
+        });
+      }
+
+      return actions;
+    },
+  });
 };
