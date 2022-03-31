@@ -1,6 +1,5 @@
 module.exports = function (plop) {
-  plop.setGenerator("empty spec", {
-    description: "creates a spec file with a describe() and it()",
+  plop.setGenerator("empty", {
     prompts: [
       {
         type: "input",
@@ -24,16 +23,14 @@ module.exports = function (plop) {
       actions.push({
         type: "add",
         path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-        templateFile: `templates/scaffold/empty.js`,
+        templateFile: `templates/spec/spec.js`,
       });
 
       return actions;
     },
   });
 
-  plop.setGenerator("login form", {
-    description:
-      "Creates either the scaffolding or a complete example spec for a login form",
+  plop.setGenerator("login", {
     prompts: [
       {
         type: "input",
@@ -53,9 +50,9 @@ module.exports = function (plop) {
       {
         type: "list",
         name: "type",
-        message: "Do you want the full example spec or just the scaffolding?",
+        message: "Do you want the complete spec or just the scaffolding?",
         choices: [
-          { name: "Example", value: "example" },
+          { name: "Complete", value: "complete" },
           { name: "Scaffold", value: "scaffold" },
         ],
         default: "js",
@@ -64,24 +61,24 @@ module.exports = function (plop) {
     actions: function (data) {
       const actions = [];
 
-      if (data.type === "example") {
+      if (data.type === "complete") {
         actions.push(
           {
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-            templateFile: `templates/example/login.js`,
+            templateFile: `templates/login/login-complete.js`,
           },
           {
             type: "append",
             path: `cypress/support/commands.js`,
-            templateFile: `templates/commands/login.js`,
+            templateFile: `templates/commands/login-command.js`,
           }
         );
       } else {
         actions.push({
           type: "add",
           path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-          templateFile: `templates/scaffold/login.js`,
+          templateFile: `templates/login/login-scaffold.js`,
         });
       }
 
