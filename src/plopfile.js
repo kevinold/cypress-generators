@@ -10,6 +10,7 @@ const generatorTypes = {
 };
 
 module.exports = function (plop) {
+  plop.setWelcomeMessage("TESTING!!!");
   plop.setGenerator("spec", {
     prompts: [
       generatorTypes,
