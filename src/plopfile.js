@@ -20,6 +20,7 @@ module.exports = function (plop) {
           { name: "Empty Spec Boilerplate", value: "empty" },
           { name: "Login Form Spec", value: "login" },
           { name: "API Spec", value: "api" },
+          { name: "Network Spec - uses cy.intercept()", value: "network" },
         ],
         when: (answers) => answers.generator === "scaffold",
         default: "empty",
@@ -29,8 +30,8 @@ module.exports = function (plop) {
         name: "example",
         message: "Please select an example spec.",
         choices: [
-          { name: "API Spec", value: "api" },
           { name: "Login Form Spec", value: "login" },
+          { name: "API Spec", value: "api" },
           { name: "Network Spec - uses cy.intercept()", value: "network" },
         ],
         when: (answers) => answers.generator === "example",
@@ -54,49 +55,79 @@ module.exports = function (plop) {
     actions: function (data) {
       const actions = [];
 
-      // Scaffold
-      if (data.scaffold === "empty") {
-        actions.push({
-          type: "add",
-          path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-          templateFile: `templates/scaffold/empty.js`,
-        });
+      // Scaffolds
+      switch (data.scaffold) {
+        case "empty":
+          actions.push({
+            type: "add",
+            path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+            templateFile: `templates/scaffold/empty.js`,
+          });
+          break;
+
+        case "login":
+          actions.push({
+            type: "add",
+            path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+            templateFile: `templates/scaffold/login.js`,
+          });
+          break;
+
+        case "api":
+          actions.push({
+            type: "add",
+            path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+            templateFile: `templates/scaffold/api.js`,
+          });
+          break;
+
+        case "network":
+          actions.push({
+            type: "add",
+            path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+            templateFile: `templates/scaffold/network.js`,
+          });
+          break;
+
+        default:
+          break;
       }
 
       // Examples
-      if (data.example === "login") {
-        actions.push(
-          {
+      switch (data.example) {
+        case "login":
+          actions.push(
+            {
+              type: "add",
+              path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+              templateFile: `templates/example/login.js`,
+            },
+            {
+              type: "append",
+              path: `cypress/support/commands.js`,
+              templateFile: `templates/commands/login.js`,
+            }
+          );
+          break;
+
+        case "api":
+          actions.push({
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-            templateFile: `templates/example/login.js`,
-          },
-          {
-            type: "append",
-            path: `cypress/support/commands.js`,
-            templateFile: `templates/commands/login.js`,
-          }
-        );
-      } else {
-        actions.push({
-          type: "add",
-          path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-          templateFile: `templates/scaffold/login.js`,
-        });
-      }
+            templateFile: `templates/example/api.js`,
+          });
+          break;
 
-      if (data.example === "api") {
-        actions.push({
-          type: "add",
-          path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-          templateFile: `templates/example/api.js`,
-        });
-      } else {
-        actions.push({
-          type: "add",
-          path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-          templateFile: `templates/scaffold/api.js`,
-        });
+        case "network":
+          actions.push({
+            type: "add",
+            path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+            templateFile: `templates/example/network.js`,
+          });
+          break;
+
+        default:
+          break;
       }
 
       return actions;
