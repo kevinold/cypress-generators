@@ -1,4 +1,4 @@
-module.exports = function (plop) {
+export default function (plop) {
   // plop.setWelcomeMessage("TESTING!!!");
   plop.setGenerator("spec", {
     prompts: [
@@ -189,4 +189,4 @@ module.exports = function (plop) {
       return actions;
     },
   });
-};
+}

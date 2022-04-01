@@ -1,6 +1,7 @@
 {
   "name": "@kevinold/cypress-generators",
   "version": "0.0.0",
+  "type": "module",
   "description": "cypress generator scripts",
   "license": "MIT",
   "repository": "YOUR-GITHUB-USERNAME/unicorn-fun-cli",

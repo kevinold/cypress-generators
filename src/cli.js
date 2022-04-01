@@ -1,26 +1,30 @@
 #!/usr/bin/env node
 
-const path = require("path");
-const { Plop, run } = require("plop");
+import path from "node:path";
+import minimist from "minimist";
+import { Plop, run } from "plop";
 
 const args = process.argv.slice(2);
-const argv = require("minimist")(args);
+const argv = minimist(args);
 
-Plop.launch(
+import { dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+Plop.prepare(
   {
     cwd: argv.cwd,
-    // In order for `plop` to always pick up the `plopfile.js` despite the CWD, you must use `__dirname`
     configPath: path.join(__dirname, "plopfile.js"),
-    require: argv.require,
+    preload: argv.preload || [],
     completion: argv.completion,
-    // This will merge the `plop` argv and the generator argv.
-    // This means that you don't need to use `--` anymore
   },
-  (env) => {
-    const options = {
-      ...env,
-      dest: process.cwd(), // this will make the destination path to be based on the cwd when calling the wrapper
-    };
-    return run(options, undefined, true);
-  }
+  (env) =>
+    Plop.execute(env, (env) => {
+      const options = {
+        ...env,
+        dest: process.cwd(), // this will make the destination path to be based on the cwd when calling the wrapper
+      };
+      return run(options, undefined, true);
+    })
 );
