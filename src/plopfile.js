@@ -2,6 +2,7 @@ module.exports = function (plop) {
   // plop.setWelcomeMessage("TESTING!!!");
   plop.setGenerator("spec", {
     prompts: [
+      // Generators
       {
         type: "list",
         name: "generator",
@@ -12,6 +13,7 @@ module.exports = function (plop) {
           { name: "Custom Command", value: "command" },
         ],
       },
+      // Scaffold
       {
         type: "list",
         name: "scaffold",
@@ -25,6 +27,7 @@ module.exports = function (plop) {
         when: (answers) => answers.generator === "scaffold",
         default: "empty",
       },
+      // Examples
       {
         type: "list",
         name: "example",
@@ -33,14 +36,29 @@ module.exports = function (plop) {
           { name: "Login Form Spec", value: "login" },
           { name: "API Spec", value: "api" },
           { name: "Network Spec - uses cy.intercept()", value: "network" },
+          { name: "localStorage", value: "localStorage" },
         ],
         when: (answers) => answers.generator === "example",
       },
+      // Commands
+      {
+        type: "list",
+        name: "command",
+        message: "Please select a custom Cypress command.",
+        choices: [
+          { name: "Login", value: "login" },
+          { name: "localStorage", value: "localStorage" },
+        ],
+        when: (answers) => answers.generator === "command",
+      },
+      // File Name
       {
         type: "input",
         name: "specName",
         message: "Please enter the file name for the spec.",
+        when: (answers) => answers.generator !== "command",
       },
+      // JavaScript or TypeScript
       {
         type: "list",
         name: "ext",
@@ -49,6 +67,7 @@ module.exports = function (plop) {
           { name: "JavaScript", value: "js" },
           { name: "TypeScript", value: "ts" },
         ],
+        when: (answers) => answers.generator !== "command",
         default: "js",
       },
     ],
@@ -123,6 +142,43 @@ module.exports = function (plop) {
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
             templateFile: `templates/example/network.js`,
+          });
+          break;
+
+        case "localStorage":
+          actions.push(
+            {
+              type: "add",
+              path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+              templateFile: `templates/example/localStorage.js`,
+            },
+            {
+              type: "append",
+              path: `cypress/support/commands.js`,
+              templateFile: `templates/commands/localStorage.js`,
+            }
+          );
+          break;
+
+        default:
+          break;
+      }
+
+      // Commands
+      switch (data.command) {
+        case "login":
+          actions.push({
+            type: "append",
+            path: `cypress/support/commands.js`,
+            templateFile: `templates/commands/login.js`,
+          });
+          break;
+
+        case "localStorage":
+          actions.push({
+            type: "append",
+            path: `cypress/support/commands.js`,
+            templateFile: `templates/commands/localStorage.js`,
           });
           break;
 
