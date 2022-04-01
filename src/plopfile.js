@@ -1,16 +1,49 @@
 module.exports = function (plop) {
-  plop.setGenerator("empty spec", {
-    description: "creates a spec file with a describe() and it()",
+  // plop.setWelcomeMessage("TESTING!!!");
+  plop.setGenerator("spec", {
     prompts: [
+      {
+        type: "list",
+        name: "generator",
+        message: "What do you want?",
+        choices: [
+          { name: "Spec Scaffold", value: "scaffold" },
+          { name: "Example Spec", value: "example" },
+          { name: "Custom Command", value: "command" },
+        ],
+      },
+      {
+        type: "list",
+        name: "scaffold",
+        message: "Please select a scaffold.",
+        choices: [
+          { name: "Empty Spec Boilerplate", value: "empty" },
+          { name: "Login Form Spec", value: "login" },
+          { name: "API Spec", value: "api" },
+        ],
+        when: (answers) => answers.generator === "scaffold",
+        default: "empty",
+      },
+      {
+        type: "list",
+        name: "example",
+        message: "Please select an example spec.",
+        choices: [
+          { name: "API Spec", value: "api" },
+          { name: "Login Form Spec", value: "login" },
+          { name: "Network Spec - uses cy.intercept()", value: "network" },
+        ],
+        when: (answers) => answers.generator === "example",
+      },
       {
         type: "input",
         name: "specName",
-        message: "What is the name of your spec?",
+        message: "Please enter the file name for the spec.",
       },
       {
         type: "list",
         name: "ext",
-        message: "Which language?",
+        message: "Are you writing this spec in JavaScript or TypeScript?",
         choices: [
           { name: "JavaScript", value: "js" },
           { name: "TypeScript", value: "ts" },
@@ -21,50 +54,17 @@ module.exports = function (plop) {
     actions: function (data) {
       const actions = [];
 
-      actions.push({
-        type: "add",
-        path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-        templateFile: `templates/scaffold/empty.js`,
-      });
+      // Scaffold
+      if (data.scaffold === "empty") {
+        actions.push({
+          type: "add",
+          path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
+          templateFile: `templates/scaffold/empty.js`,
+        });
+      }
 
-      return actions;
-    },
-  });
-
-  plop.setGenerator("login form", {
-    description:
-      "Creates either the scaffolding or a complete example spec for a login form",
-    prompts: [
-      {
-        type: "input",
-        name: "specName",
-        message: "What is the name of your spec?",
-      },
-      {
-        type: "list",
-        name: "ext",
-        message: "Which language?",
-        choices: [
-          { name: "JavaScript", value: "js" },
-          { name: "TypeScript", value: "ts" },
-        ],
-        default: "js",
-      },
-      {
-        type: "list",
-        name: "type",
-        message: "Do you want the full example spec or just the scaffolding?",
-        choices: [
-          { name: "Example", value: "example" },
-          { name: "Scaffold", value: "scaffold" },
-        ],
-        default: "js",
-      },
-    ],
-    actions: function (data) {
-      const actions = [];
-
-      if (data.type === "example") {
+      // Examples
+      if (data.example === "login") {
         actions.push(
           {
             type: "add",
@@ -85,44 +85,7 @@ module.exports = function (plop) {
         });
       }
 
-      return actions;
-    },
-  });
-
-  plop.setGenerator("api", {
-    description:
-      "Creates either the scaffolding or a complete example spec for an API endpoint",
-    prompts: [
-      {
-        type: "input",
-        name: "specName",
-        message: "What is the name of your spec?",
-      },
-      {
-        type: "list",
-        name: "ext",
-        message: "Which language?",
-        choices: [
-          { name: "JavaScript", value: "js" },
-          { name: "TypeScript", value: "ts" },
-        ],
-        default: "js",
-      },
-      {
-        type: "list",
-        name: "type",
-        message: "Do you want the full example spec or just the scaffolding?",
-        choices: [
-          { name: "Example", value: "example" },
-          { name: "Scaffold", value: "scaffold" },
-        ],
-        default: "js",
-      },
-    ],
-    actions: function (data) {
-      const actions = [];
-
-      if (data.type === "example") {
+      if (data.example === "api") {
         actions.push({
           type: "add",
           path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
