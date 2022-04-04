@@ -37,6 +37,7 @@
   "devDependencies": {
     "cli-testing-library": "^1.0.2",
     "jest": "^27.5.1",
+    "mock-fs": "^5.1.2",
     "vitest": "^0.8.4"
   }
 }
