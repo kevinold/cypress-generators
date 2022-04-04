@@ -17,6 +17,11 @@ test("the Empty Spec Boilerplate creates the correct file & contents", async () 
     )
   );
 
+  const template = fs.readFileSync(
+    resolve(__dirname, "../src/templates/scaffold/empty.js"),
+    "utf8"
+  );
+
   const { findByText, userEvent } = await render("node", [
     resolve(__dirname, "../src/cli.js"),
   ]);
@@ -41,10 +46,6 @@ test("the Empty Spec Boilerplate creates the correct file & contents", async () 
   await waitFor(() => fs.promises.stat(expectedFilePath));
 
   const output = fs.readFileSync(expectedFilePath, "utf8");
-  const template = fs.readFileSync(
-    resolve(__dirname, "../src/templates/scaffold/empty.js"),
-    "utf8"
-  );
 
   expect(output).toMatch(template);
 });
