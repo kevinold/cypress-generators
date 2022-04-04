@@ -1,5 +1,4 @@
 export default function (plop) {
-  // plop.setWelcomeMessage("TESTING!!!");
   plop.setGenerator("spec", {
     prompts: [
       // Generators
