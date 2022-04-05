@@ -28,10 +28,10 @@ test("the Login Form Spec example creates the correct file & contents", async ()
     "utf8"
   );
 
-  const templateCommand = fs.readFileSync(
-    resolve(__dirname, "../../src/templates/commands/login.js"),
-    "utf8"
-  );
+  // const templateCommand = fs.readFileSync(
+  //   resolve(__dirname, "../../src/templates/commands/login.js"),
+  //   "utf8"
+  // );
 
   const { findByText, userEvent } = await render("node", [
     resolve(__dirname, "../../src/cli.js"),
@@ -56,11 +56,11 @@ test("the Login Form Spec example creates the correct file & contents", async ()
   userEvent.keyboard("[Enter]");
 
   await waitFor(() => fs.promises.stat(expectedSpecFilePath));
-  await waitFor(() => fs.promises.stat(expectedCommandFilePath));
+  // await waitFor(() => fs.promises.stat(expectedCommandFilePath));
 
   const outputSpec = fs.readFileSync(expectedSpecFilePath, "utf8");
-  const outputCommand = fs.readFileSync(expectedCommandFilePath, "utf8");
+  // const outputCommand = fs.readFileSync(expectedCommandFilePath, "utf8");
 
   expect(outputSpec).toMatch(templateSpec);
-  expect(outputCommand).toMatch(templateCommand);
+  // expect(outputCommand).toMatch(templateCommand);
 });
