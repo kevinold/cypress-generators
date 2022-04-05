@@ -13,22 +13,14 @@ describe("Scaffold - Login Form", () => {
   });
 
   test("it creates the correct files & contents", async () => {
-    const loginFormTemplate = fs.readFileSync(
-      resolve(__dirname, "../../src/templates/scaffold/login.js"),
-      "utf8"
-    );
-
-    const loginCustomCommandTemplate = fs.readFileSync(
-      resolve(__dirname, "../../src/templates/commands/login.js"),
+    const template = fs.readFileSync(
+      resolve(__dirname, "../../src/templates/scaffold/api.js"),
       "utf8"
     );
 
     mock({
       "cypress/integration": {
-        "login.js": loginFormTemplate,
-      },
-      "cypress/support": {
-        "commands.js": loginCustomCommandTemplate,
+        "api.js": template,
       },
     });
 
@@ -39,14 +31,15 @@ describe("Scaffold - Login Form", () => {
     expect(await findByText("What do you want?")).toBeInTheConsole();
     userEvent.keyboard("[Enter]");
 
-    expect(await findByText("Login Form Spec")).toBeInTheConsole();
+    expect(await findByText("API Spec")).toBeInTheConsole();
+    userEvent.keyboard("[ArrowDown]");
     userEvent.keyboard("[ArrowDown]");
     userEvent.keyboard("[Enter]");
 
     expect(
       await findByText("Please enter the file name for the spec.")
     ).toBeInTheConsole();
-    userEvent.keyboard("login");
+    userEvent.keyboard("api");
     userEvent.keyboard("[Enter]");
 
     expect(
@@ -54,12 +47,9 @@ describe("Scaffold - Login Form", () => {
     ).toBeInTheConsole();
     userEvent.keyboard("[Enter]");
 
-    const specFilePath = `${process.cwd()}/cypress/integration/login.js`;
-    const commandFilePath = `${process.cwd()}/cypress/support/commands.js`;
+    const specFilePath = `${process.cwd()}/cypress/integration/api.js`;
     const specFileContents = readFileSync(specFilePath, "utf8");
-    const commandsFileContents = readFileSync(commandFilePath, "utf8");
 
-    expect(specFileContents).toMatch(loginFormTemplate);
-    expect(commandsFileContents).toMatch(loginCustomCommandTemplate);
+    expect(specFileContents).toMatch(template);
   });
 });
