@@ -7,14 +7,14 @@ import { readFileSync } from "fs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-describe("Scaffold Actions", () => {
+describe("Scaffold - Empty Spec Boilerplate", () => {
   afterAll(() => {
     mock.restore();
   });
 
-  test("the Empty Spec Boilerplate creates the correct file & contents", async () => {
+  test("it creates the correct file & contents", async () => {
     const template = fs.readFileSync(
-      resolve(__dirname, "../src/templates/scaffold/empty.js"),
+      resolve(__dirname, "../../src/templates/scaffold/empty.js"),
       "utf8"
     );
 
@@ -25,7 +25,7 @@ describe("Scaffold Actions", () => {
     });
 
     const { findByText, userEvent } = await render("node", [
-      resolve(__dirname, "../src/cli.js"),
+      resolve(__dirname, "../../src/cli.js"),
     ]);
 
     expect(await findByText("What do you want?")).toBeInTheConsole();
