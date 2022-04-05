@@ -35,7 +35,7 @@ export default function (plop) {
           { name: "Login Form Spec", value: "login" },
           { name: "API Spec", value: "api" },
           { name: "Network Spec - uses cy.intercept()", value: "network" },
-          { name: "localStorage", value: "localStorage" },
+          { name: "localStorage Spec", value: "localStorage" },
         ],
         when: (answers) => answers.generator === "example",
       },
@@ -79,7 +79,7 @@ export default function (plop) {
           actions.push({
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-            templateFile: `templates/scaffold/empty.js`,
+            templateFile: `templates/scaffolds/empty.js`,
           });
           break;
 
@@ -87,7 +87,7 @@ export default function (plop) {
           actions.push({
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-            templateFile: `templates/scaffold/login.js`,
+            templateFile: `templates/scaffolds/login.js`,
           });
           break;
 
@@ -95,7 +95,7 @@ export default function (plop) {
           actions.push({
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-            templateFile: `templates/scaffold/api.js`,
+            templateFile: `templates/scaffolds/api.js`,
           });
           break;
 
@@ -103,7 +103,7 @@ export default function (plop) {
           actions.push({
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-            templateFile: `templates/scaffold/network.js`,
+            templateFile: `templates/scaffolds/network.js`,
           });
           break;
 
@@ -118,7 +118,7 @@ export default function (plop) {
             {
               type: "add",
               path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-              templateFile: `templates/example/login.js`,
+              templateFile: `templates/examples/login.js`,
             },
             {
               type: "append",
@@ -132,7 +132,7 @@ export default function (plop) {
           actions.push({
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-            templateFile: `templates/example/api.js`,
+            templateFile: `templates/examples/api.js`,
           });
           break;
 
@@ -140,7 +140,7 @@ export default function (plop) {
           actions.push({
             type: "add",
             path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-            templateFile: `templates/example/network.js`,
+            templateFile: `templates/examples/network.js`,
           });
           break;
 
@@ -149,7 +149,7 @@ export default function (plop) {
             {
               type: "add",
               path: `cypress/integration/{{dashCase specName}}.spec.{{ ext }}`,
-              templateFile: `templates/example/localStorage.js`,
+              templateFile: `templates/examples/localStorage.js`,
             },
             {
               type: "append",

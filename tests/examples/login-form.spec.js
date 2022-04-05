@@ -8,16 +8,28 @@ const { getFilePath } = getFileHelper();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-test("the Login Form Spec scaffolds the correct file & contents", async () => {
-  const expectedFilePath = await getFilePath(
+test("the Login Form Spec example creates the correct file & contents", async () => {
+  const expectedSpecFilePath = await getFilePath(
     resolve(
       __dirname,
       "../../node_modules/cli-testing-library/dist/cypress/integration/login.spec.js"
     )
   );
 
-  const template = fs.readFileSync(
-    resolve(__dirname, "../../src/templates/scaffolds/login.js"),
+  const expectedCommandFilePath = await getFilePath(
+    resolve(
+      __dirname,
+      "../../node_modules/cli-testing-library/dist/cypress/support/commands.js"
+    )
+  );
+
+  const templateSpec = fs.readFileSync(
+    resolve(__dirname, "../../src/templates/examples/login.js"),
+    "utf8"
+  );
+
+  const templateCommand = fs.readFileSync(
+    resolve(__dirname, "../../src/templates/commands/login.js"),
     "utf8"
   );
 
@@ -25,11 +37,11 @@ test("the Login Form Spec scaffolds the correct file & contents", async () => {
     resolve(__dirname, "../../src/cli.js"),
   ]);
 
-  expect(await findByText("Spec Scaffold")).toBeInTheConsole();
+  expect(await findByText("Example Spec")).toBeInTheConsole();
+  userEvent.keyboard("[ArrowDown]");
   userEvent.keyboard("[Enter]");
 
   expect(await findByText("Login Form Spec")).toBeInTheConsole();
-  userEvent.keyboard("[ArrowDown]");
   userEvent.keyboard("[Enter]");
 
   expect(
@@ -43,9 +55,12 @@ test("the Login Form Spec scaffolds the correct file & contents", async () => {
   ).toBeInTheConsole();
   userEvent.keyboard("[Enter]");
 
-  await waitFor(() => fs.promises.stat(expectedFilePath));
+  await waitFor(() => fs.promises.stat(expectedSpecFilePath));
+  await waitFor(() => fs.promises.stat(expectedCommandFilePath));
 
-  const output = fs.readFileSync(expectedFilePath, "utf8");
+  const outputSpec = fs.readFileSync(expectedSpecFilePath, "utf8");
+  const outputCommand = fs.readFileSync(expectedCommandFilePath, "utf8");
 
-  expect(output).toMatch(template);
+  expect(outputSpec).toMatch(templateSpec);
+  expect(outputCommand).toMatch(templateCommand);
 });

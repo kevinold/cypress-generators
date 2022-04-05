@@ -1,4 +1,3 @@
-import path from "path";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { render } from "cli-testing-library";
@@ -18,7 +17,7 @@ test("the Empty Spec Boilerplate creates the correct file & contents", async () 
   );
 
   const template = fs.readFileSync(
-    resolve(__dirname, "../src/templates/scaffold/empty.js"),
+    resolve(__dirname, "../src/templates/scaffolds/empty.js"),
     "utf8"
   );
 

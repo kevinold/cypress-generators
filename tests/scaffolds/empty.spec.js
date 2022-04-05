@@ -8,16 +8,16 @@ const { getFilePath } = getFileHelper();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-test("the API Spec scaffolds the correct file & contents", async () => {
+test("the Empty Spec Boilerplate scaffolds the correct file & contents", async () => {
   const expectedFilePath = await getFilePath(
     resolve(
       __dirname,
-      "../../node_modules/cli-testing-library/dist/cypress/integration/network.spec.js"
+      "../../node_modules/cli-testing-library/dist/cypress/integration/empty.spec.js"
     )
   );
 
   const template = fs.readFileSync(
-    resolve(__dirname, "../../src/templates/scaffolds/network.js"),
+    resolve(__dirname, "../../src/templates/scaffolds/empty.js"),
     "utf8"
   );
 
@@ -25,21 +25,16 @@ test("the API Spec scaffolds the correct file & contents", async () => {
     resolve(__dirname, "../../src/cli.js"),
   ]);
 
-  expect(await findByText("Spec Scaffold")).toBeInTheConsole();
+  expect(await findByText("What do you want?")).toBeInTheConsole();
   userEvent.keyboard("[Enter]");
+  expect(await findByText("Empty Spec Boilerplate")).toBeInTheConsole();
 
-  expect(
-    await findByText("Network Spec - uses cy.intercept()")
-  ).toBeInTheConsole();
-  userEvent.keyboard("[ArrowDown]");
-  userEvent.keyboard("[ArrowDown]");
-  userEvent.keyboard("[ArrowDown]");
   userEvent.keyboard("[Enter]");
 
   expect(
     await findByText("Please enter the file name for the spec.")
   ).toBeInTheConsole();
-  userEvent.keyboard("network");
+  userEvent.keyboard("empty");
   userEvent.keyboard("[Enter]");
 
   expect(
